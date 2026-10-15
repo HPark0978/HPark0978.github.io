@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TeslaVoice 로그인 완료</title>
+  <style>
+    :root { color-scheme: dark; }
+    body { font-family: -apple-system, "Segoe UI", Roboto, "Noto Sans KR", sans-serif; background:#0b0f14; color:#e2e8f0; margin:0; padding:32px 20px; }
+    .card { max-width:520px; margin:0 auto; background:#151b23; border-radius:14px; padding:24px; }
+    h1 { font-size:20px; margin:0 0 12px; }
+    p { line-height:1.5; color:#8a97a8; }
+    a.btn { display:inline-block; margin-top:12px; padding:12px 18px; background:#4fd1c5; color:#0b0f14; border-radius:10px; text-decoration:none; font-weight:600; }
+    code { background:#1e2731; padding:6px 8px; border-radius:6px; display:block; word-break:break-all; margin-top:12px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Tesla 로그인 완료</h1>
+    <p id="msg">TeslaVoice 앱으로 돌아가는 중입니다…</p>
+    <a id="open" class="btn" href="#">앱으로 돌아가기</a>
+    <p>자동으로 열리지 않으면 위 버튼을 누르거나, 아래 코드를 앱의 로그인 화면에서 사용하세요.</p>
+    <code id="code"></code>
+  </div>
+  <script>
+    (function () {
+      var q = new URLSearchParams(window.location.search);
+      var code = q.get("code") || "";
+      var state = q.get("state") || "";
+      var target = "teslavoice://oauth?code=" + encodeURIComponent(code) + "&state=" + encodeURIComponent(state);
+      document.getElementById("open").href = target;
+      document.getElementById("code").textContent = code ? code : "(code 파라미터 없음)";
+      if (code) {
+        setTimeout(function () { window.location.href = target; }, 300);
+      } else {
+        document.getElementById("msg").textContent = "인증 코드가 전달되지 않았습니다. 앱에서 다시 로그인해 주세요.";
+      }
+    })();
+  </script>
+</body>
+</html>

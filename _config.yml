@@ -1,0 +1,2 @@
+# GitHub Pages (Jekyll) hides dot-folders by default; Tesla needs the .well-known path served.
+include: [".well-known"]
